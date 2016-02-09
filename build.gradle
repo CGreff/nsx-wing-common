@@ -10,6 +10,7 @@ allprojects {
 
 subprojects {
 	apply plugin: 'java'
+	apply plugin: 'maven-publish'
 
 	tasks.withType(JavaCompile) {
 		sourceCompatibility = '1.8'
@@ -28,6 +29,22 @@ subprojects {
 		testCompile "org.slf4j:jcl-over-slf4j:${project.slf4jVersion}"
 		testCompile "org.mockito:mockito-core:${project.mockitoVersion}"
 		testCompile "junit:junit:${project.junitVersion}"
+	}
+
+	task sourceJar(type: Jar) {
+		from sourceSets.main.allJava
+	}
+
+	publishing {
+		publications {
+			mavenJava(MavenPublication) {
+				from components.java
+
+				artifact sourceJar {
+					classifier "sources"
+				}
+			}
+		}
 	}
 
 }
