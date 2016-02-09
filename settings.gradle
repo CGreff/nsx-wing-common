@@ -1,0 +1,5 @@
+rootProject.name = 'nsx-wing-common'
+
+include 'nsx-wing-common-game',
+        'nsx-wing-common-networking'
+
