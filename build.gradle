@@ -1,6 +1,6 @@
 allprojects {
-	group = 'com.nsxwing'
-	version = '1.0-SNAPSHOT'
+	group = 'com.nsxwing.common'
+	version = '0.1.0'
 
 	repositories {
 		mavenCentral()
