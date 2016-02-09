@@ -1,2 +1,2 @@
-# nsx-wing-client
-The client companion for the NSX-Wing server
+# nsx-wing-common
+Shared code between the NSX-Wing Client &amp; Server
