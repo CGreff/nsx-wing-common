@@ -1,6 +1,9 @@
 description = 'The shared networking components of the NSXWing Client & Server'
 
 dependencies {
+	compile project(':nsx-wing-common-game')
+	compile "com.esotericsoftware:kryonet:${project.kryonetVersion}"
+
 	runtime(
 			[group: 'ch.qos.logback', name: 'logback-classic',  version: project.logbackVersion],
 	)

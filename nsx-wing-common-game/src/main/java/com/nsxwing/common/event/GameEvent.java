@@ -2,8 +2,9 @@ package com.nsxwing.common.event;
 
 import java.io.Serializable;
 
-public class GameEvent implements Serializable {
+public interface GameEvent extends Serializable {
 
-	private static final long serialVersionUID = 5950169519310313375L;
-
+	default Class getEventType() {
+		return this.getClass();
+	}
 }
