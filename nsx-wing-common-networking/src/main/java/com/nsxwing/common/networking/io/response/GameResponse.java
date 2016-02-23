@@ -1,4 +1,12 @@
 package com.nsxwing.common.networking.io.response;
 
-public interface GameResponse {
+import com.nsxwing.common.player.PlayerIdentifier;
+
+public abstract class GameResponse {
+
+	PlayerIdentifier playerIdentifier;
+
+	public PlayerIdentifier getPlayerIdentifier() {
+		return playerIdentifier;
+	}
 }
