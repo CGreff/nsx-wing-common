@@ -20,6 +20,7 @@ import com.nsxwing.common.networking.io.event.ModifyDefenseEvent;
 import com.nsxwing.common.networking.io.event.PlanningEvent;
 import com.nsxwing.common.networking.io.event.PostCombatEvent;
 import com.nsxwing.common.networking.io.event.PreCombatEvent;
+import com.nsxwing.common.player.PlayerIdentifier;
 
 public class KryoNetwork {
 
@@ -27,6 +28,7 @@ public class KryoNetwork {
 
 	static public void register(EndPoint endPoint) {
 		Kryo kryo = endPoint.getKryo();
+		kryo.register(PlayerIdentifier.class);
 		kryo.register(ActionEvent.class);
 		kryo.register(ActionResponse.class);
 		kryo.register(AttackEvent.class);

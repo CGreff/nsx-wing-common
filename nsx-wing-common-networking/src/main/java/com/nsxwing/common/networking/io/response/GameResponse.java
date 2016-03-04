@@ -9,4 +9,8 @@ public abstract class GameResponse {
 	public PlayerIdentifier getPlayerIdentifier() {
 		return playerIdentifier;
 	}
+
+	public void setPlayerIdentifier(PlayerIdentifier playerIdentifier) {
+		this.playerIdentifier = playerIdentifier;
+	}
 }
