@@ -1,1 +1,5 @@
 description = 'The common game components of the NSXWing Client & Server'
+
+dependencies {
+	compile "com.esotericsoftware:kryonet:${project.kryonetVersion}"
+}

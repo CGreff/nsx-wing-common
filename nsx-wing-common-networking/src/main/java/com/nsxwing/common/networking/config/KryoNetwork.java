@@ -2,7 +2,17 @@ package com.nsxwing.common.networking.config;
 
 import com.esotericsoftware.kryo.Kryo;
 import com.esotericsoftware.kryonet.EndPoint;
+import com.nsxwing.common.networking.io.event.ActionEvent;
+import com.nsxwing.common.networking.io.event.AttackEvent;
 import com.nsxwing.common.networking.io.event.ConnectionEvent;
+import com.nsxwing.common.networking.io.event.EndAttackEvent;
+import com.nsxwing.common.networking.io.event.GameEndEvent;
+import com.nsxwing.common.networking.io.event.GameStartEvent;
+import com.nsxwing.common.networking.io.event.ModifyAttackEvent;
+import com.nsxwing.common.networking.io.event.ModifyDefenseEvent;
+import com.nsxwing.common.networking.io.event.PlanningEvent;
+import com.nsxwing.common.networking.io.event.PostCombatEvent;
+import com.nsxwing.common.networking.io.event.PreCombatEvent;
 import com.nsxwing.common.networking.io.response.ActionResponse;
 import com.nsxwing.common.networking.io.response.AttackResponse;
 import com.nsxwing.common.networking.io.response.ConnectionResponse;
@@ -12,17 +22,11 @@ import com.nsxwing.common.networking.io.response.ModifyDefenseResponse;
 import com.nsxwing.common.networking.io.response.PlanningResponse;
 import com.nsxwing.common.networking.io.response.PostCombatResponse;
 import com.nsxwing.common.networking.io.response.PreCombatResponse;
-import com.nsxwing.common.networking.io.event.ActionEvent;
-import com.nsxwing.common.networking.io.event.AttackEvent;
-import com.nsxwing.common.networking.io.event.EndAttackEvent;
-import com.nsxwing.common.networking.io.event.GameEndEvent;
-import com.nsxwing.common.networking.io.event.GameStartEvent;
-import com.nsxwing.common.networking.io.event.ModifyAttackEvent;
-import com.nsxwing.common.networking.io.event.ModifyDefenseEvent;
-import com.nsxwing.common.networking.io.event.PlanningEvent;
-import com.nsxwing.common.networking.io.event.PostCombatEvent;
-import com.nsxwing.common.networking.io.event.PreCombatEvent;
 import com.nsxwing.common.player.PlayerIdentifier;
+import com.nsxwing.common.player.agent.PlayerAgent;
+import de.javakaffee.kryoserializers.ArraysAsListSerializer;
+import java.util.Arrays;
+import java.util.List;
 
 public class KryoNetwork {
 
@@ -30,7 +34,10 @@ public class KryoNetwork {
 
 	static public void register(EndPoint endPoint) {
 		Kryo kryo = endPoint.getKryo();
+		kryo.register(Arrays.asList("").getClass(), new ArraysAsListSerializer());
+		kryo.register(List.class);
 		kryo.register(PlayerIdentifier.class);
+		kryo.register(PlayerAgent.class);
 		kryo.register(ActionEvent.class);
 		kryo.register(ActionResponse.class);
 		kryo.register(AttackEvent.class);
