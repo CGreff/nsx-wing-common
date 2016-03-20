@@ -2,9 +2,7 @@ package com.nsxwing.common.networking.io.event;
 
 import com.nsxwing.common.state.GameState;
 
-public interface GameEvent {
+public interface GameplayEvent extends GameEvent {
 
-	default Class getEventType() {
-		return this.getClass();
-	}
+	GameState getGameState();
 }

@@ -40,10 +40,7 @@ public class GameStateTest {
 	}
 
 	private GameState buildGameState(List<PlayerAgent> playerAgents, int turnNumber) {
-		return GameState.builder()
-				.playerAgents(playerAgents)
-				.turnNumber(turnNumber)
-				.build();
+		return new GameState(playerAgents, null, turnNumber);
 	}
 
 	private void mockAgents() {

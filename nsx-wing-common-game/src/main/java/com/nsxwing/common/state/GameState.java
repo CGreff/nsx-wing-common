@@ -1,19 +1,24 @@
 package com.nsxwing.common.state;
 
 import com.nsxwing.common.player.agent.PlayerAgent;
-import lombok.Builder;
+import com.nsxwing.common.position.Maneuver;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.util.List;
+import java.util.Map;
 
 import static com.nsxwing.common.player.PlayerIdentifier.CHAMP;
 import static com.nsxwing.common.player.PlayerIdentifier.SCRUB;
 
 @Data
-@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class GameState {
 	protected static final int MAX_TURNS = 100;
 	private List<PlayerAgent> playerAgents;
+	private Map<Integer, Maneuver> plannedManeuvers;
 	private int turnNumber;
 
 	public boolean isGameComplete() {

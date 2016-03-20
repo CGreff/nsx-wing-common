@@ -1,6 +1,7 @@
 package com.nsxwing.common.networking.config;
 
 import com.esotericsoftware.kryo.Kryo;
+import com.esotericsoftware.kryo.util.IntArray;
 import com.esotericsoftware.kryonet.EndPoint;
 import com.nsxwing.common.networking.io.event.ActionEvent;
 import com.nsxwing.common.networking.io.event.AttackEvent;
@@ -24,9 +25,15 @@ import com.nsxwing.common.networking.io.response.PostCombatResponse;
 import com.nsxwing.common.networking.io.response.PreCombatResponse;
 import com.nsxwing.common.player.PlayerIdentifier;
 import com.nsxwing.common.player.agent.PlayerAgent;
+import com.nsxwing.common.position.Maneuver;
+import com.nsxwing.common.state.GameState;
 import de.javakaffee.kryoserializers.ArraysAsListSerializer;
+
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class KryoNetwork {
 
@@ -36,6 +43,12 @@ public class KryoNetwork {
 		Kryo kryo = endPoint.getKryo();
 		kryo.register(Arrays.asList("").getClass(), new ArraysAsListSerializer());
 		kryo.register(List.class);
+		kryo.register(ArrayList.class);
+		kryo.register(Map.class);
+		kryo.register(HashMap.class);
+		kryo.register(GameState.class);
+		kryo.register(Maneuver.class);
+		kryo.register(Integer.class);
 		kryo.register(PlayerIdentifier.class);
 		kryo.register(PlayerAgent.class);
 		kryo.register(ActionEvent.class);

@@ -6,7 +6,7 @@ import com.nsxwing.common.position.descriptor.Position;
 /**
  * Abstract class for describing a Maneuver object. Contains helpers that translate from local coordinates to global coordinates.
  */
-abstract class Maneuver {
+public abstract class Maneuver {
 
 	protected Direction direction;
 	protected ManeuverDifficulty difficulty;

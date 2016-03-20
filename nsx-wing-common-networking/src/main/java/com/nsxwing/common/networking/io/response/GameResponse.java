@@ -4,7 +4,7 @@ import com.nsxwing.common.player.PlayerIdentifier;
 
 public abstract class GameResponse {
 
-	PlayerIdentifier playerIdentifier;
+	protected PlayerIdentifier playerIdentifier;
 
 	public PlayerIdentifier getPlayerIdentifier() {
 		return playerIdentifier;

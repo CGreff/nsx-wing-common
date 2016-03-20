@@ -5,6 +5,7 @@ import com.nsxwing.common.player.PlayerIdentifier;
 import com.nsxwing.common.player.agent.PlayerAgent;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import static com.nsxwing.common.player.PlayerIdentifier.CHAMP;
@@ -21,10 +22,7 @@ public class GameStateFactory {
 		agents.addAll(champ.getPlayerAgents());
 		agents.addAll(scrub.getPlayerAgents());
 
-		return GameState.builder()
-				.playerAgents(agents)
-				.turnNumber(INITIAL_TURN_NUMBER)
-				.build();
+		return new GameState(agents, new HashMap<>(), INITIAL_TURN_NUMBER);
 	}
 
 	private void addPlayerIdentifer(Player player, PlayerIdentifier playerIdentifier) {
@@ -32,9 +30,9 @@ public class GameStateFactory {
 	}
 
 	public GameState incrementTurn(GameState gameState) {
-		return GameState.builder()
-				.turnNumber(gameState.getTurnNumber() + 1)
-				.playerAgents(gameState.getPlayerAgents())
-				.build();
+		return new GameState(
+				gameState.getPlayerAgents(),
+				gameState.getPlannedManeuvers(),
+				gameState.getTurnNumber() + 1);
 	}
 }
