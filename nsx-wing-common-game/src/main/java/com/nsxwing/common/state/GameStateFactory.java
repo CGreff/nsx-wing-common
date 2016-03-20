@@ -17,15 +17,15 @@ public class GameStateFactory {
 
 	public GameState buildInitialGameState(Player champ, Player scrub) {
 		List<PlayerAgent> agents = new ArrayList<>();
-		addPlayerIdentifer(champ, CHAMP);
-		addPlayerIdentifer(scrub, SCRUB);
+		addPlayerIdentifier(champ, CHAMP);
+		addPlayerIdentifier(scrub, SCRUB);
 		agents.addAll(champ.getPlayerAgents());
 		agents.addAll(scrub.getPlayerAgents());
 
 		return new GameState(agents, new HashMap<>(), INITIAL_TURN_NUMBER);
 	}
 
-	private void addPlayerIdentifer(Player player, PlayerIdentifier playerIdentifier) {
+	private void addPlayerIdentifier(Player player, PlayerIdentifier playerIdentifier) {
 		player.getPlayerAgents().stream().forEach(playerAgent -> playerAgent.setOwner(playerIdentifier));
 	}
 
