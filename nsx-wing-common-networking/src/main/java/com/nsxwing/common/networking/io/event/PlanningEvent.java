@@ -8,9 +8,6 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 public class PlanningEvent implements GameplayEvent {
-
-	@Getter
 	private GameState gameState;
-
 }
 
