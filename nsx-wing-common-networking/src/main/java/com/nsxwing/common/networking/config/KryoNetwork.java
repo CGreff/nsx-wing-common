@@ -1,8 +1,6 @@
 package com.nsxwing.common.networking.config;
 
 import com.esotericsoftware.kryo.Kryo;
-import com.esotericsoftware.kryo.util.IntArray;
-import com.esotericsoftware.kryonet.Connection;
 import com.esotericsoftware.kryonet.EndPoint;
 import com.nsxwing.common.component.pilot.Pilot;
 import com.nsxwing.common.gameplay.action.Action;
@@ -12,7 +10,6 @@ import com.nsxwing.common.networking.io.event.AttackEvent;
 import com.nsxwing.common.networking.io.event.ConnectionEvent;
 import com.nsxwing.common.networking.io.event.EndAttackEvent;
 import com.nsxwing.common.networking.io.event.GameEndEvent;
-import com.nsxwing.common.networking.io.event.GameStartEvent;
 import com.nsxwing.common.networking.io.event.ModifyAttackEvent;
 import com.nsxwing.common.networking.io.event.ModifyDefenseEvent;
 import com.nsxwing.common.networking.io.event.PlanningEvent;
@@ -82,7 +79,6 @@ public class KryoNetwork {
 		kryo.register(PostCombatResponse.class);
 		kryo.register(PreCombatEvent.class);
 		kryo.register(PreCombatResponse.class);
-		kryo.register(GameStartEvent.class);
 		kryo.register(GameEndEvent.class);
 		kryo.register(ConnectionEvent.class);
 		kryo.register(ConnectionResponse.class);
