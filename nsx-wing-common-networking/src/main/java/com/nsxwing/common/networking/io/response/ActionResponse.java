@@ -1,5 +1,11 @@
 package com.nsxwing.common.networking.io.response;
 
-public class ActionResponse extends GameResponse {
+import com.nsxwing.common.gameplay.action.Action;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
+@Data
+@NoArgsConstructor
+public class ActionResponse extends GameResponse {
+	Action action;
 }

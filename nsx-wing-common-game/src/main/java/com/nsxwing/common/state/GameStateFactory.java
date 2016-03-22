@@ -22,7 +22,7 @@ public class GameStateFactory {
 		agents.addAll(champ.getPlayerAgents());
 		agents.addAll(scrub.getPlayerAgents());
 
-		return new GameState(agents, new HashMap<>(), INITIAL_TURN_NUMBER);
+		return new GameState(champ, scrub, agents, new HashMap<>(), INITIAL_TURN_NUMBER);
 	}
 
 	private void addPlayerIdentifier(Player player, PlayerIdentifier playerIdentifier) {
@@ -31,6 +31,8 @@ public class GameStateFactory {
 
 	public GameState incrementTurn(GameState gameState) {
 		return new GameState(
+				gameState.getChamp(),
+				gameState.getScrub(),
 				gameState.getPlayerAgents(),
 				gameState.getPlannedManeuvers(),
 				gameState.getTurnNumber() + 1);

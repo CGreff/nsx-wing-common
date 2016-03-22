@@ -29,8 +29,8 @@ public class PlayerAgentTest {
 
 	@Before
 	public void setUp() {
-		underTest = new PlayerAgent(new Pilot(1), CHAMP, 0, null);
-		otherTest = new PlayerAgent(new Pilot(9), SCRUB, 1, null);
+		underTest = new PlayerAgent(new Pilot(1), CHAMP, 0, null, 0);
+		otherTest = new PlayerAgent(new Pilot(9), SCRUB, 1, null, 0);
 		agentList = new ArrayList<>();
 	}
 

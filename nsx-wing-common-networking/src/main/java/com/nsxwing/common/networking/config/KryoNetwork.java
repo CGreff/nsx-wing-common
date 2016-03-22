@@ -2,7 +2,11 @@ package com.nsxwing.common.networking.config;
 
 import com.esotericsoftware.kryo.Kryo;
 import com.esotericsoftware.kryo.util.IntArray;
+import com.esotericsoftware.kryonet.Connection;
 import com.esotericsoftware.kryonet.EndPoint;
+import com.nsxwing.common.component.pilot.Pilot;
+import com.nsxwing.common.gameplay.action.Action;
+import com.nsxwing.common.gameplay.action.Focus;
 import com.nsxwing.common.networking.io.event.ActionEvent;
 import com.nsxwing.common.networking.io.event.AttackEvent;
 import com.nsxwing.common.networking.io.event.ConnectionEvent;
@@ -23,9 +27,15 @@ import com.nsxwing.common.networking.io.response.ModifyDefenseResponse;
 import com.nsxwing.common.networking.io.response.PlanningResponse;
 import com.nsxwing.common.networking.io.response.PostCombatResponse;
 import com.nsxwing.common.networking.io.response.PreCombatResponse;
+import com.nsxwing.common.player.Player;
 import com.nsxwing.common.player.PlayerIdentifier;
 import com.nsxwing.common.player.agent.PlayerAgent;
+import com.nsxwing.common.position.Direction;
+import com.nsxwing.common.position.Forward;
 import com.nsxwing.common.position.Maneuver;
+import com.nsxwing.common.position.ManeuverDifficulty;
+import com.nsxwing.common.position.descriptor.Coordinate;
+import com.nsxwing.common.position.descriptor.Position;
 import com.nsxwing.common.state.GameState;
 import de.javakaffee.kryoserializers.ArraysAsListSerializer;
 
@@ -45,12 +55,17 @@ public class KryoNetwork {
 		kryo.register(List.class);
 		kryo.register(ArrayList.class);
 		kryo.register(Map.class);
-		kryo.register(HashMap.class);
-		kryo.register(GameState.class);
-		kryo.register(Maneuver.class);
 		kryo.register(Integer.class);
+		kryo.register(HashMap.class);
+
+		kryo.register(GameState.class);
 		kryo.register(PlayerIdentifier.class);
 		kryo.register(PlayerAgent.class);
+		kryo.register(Player.class);
+		kryo.register(Pilot.class);
+		kryo.register(Action.class);
+		kryo.register(Focus.class);
+
 		kryo.register(ActionEvent.class);
 		kryo.register(ActionResponse.class);
 		kryo.register(AttackEvent.class);
@@ -71,6 +86,14 @@ public class KryoNetwork {
 		kryo.register(GameEndEvent.class);
 		kryo.register(ConnectionEvent.class);
 		kryo.register(ConnectionResponse.class);
+
+		kryo.register(Position.class);
+		kryo.register(Coordinate.class);
+		kryo.register(Maneuver.class);
+		kryo.register(ManeuverDifficulty.class);
+		kryo.register(Direction.class);
+		kryo.register(Forward.class);
 	}
+
 
 }

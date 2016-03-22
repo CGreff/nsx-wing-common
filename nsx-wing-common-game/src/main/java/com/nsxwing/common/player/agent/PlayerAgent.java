@@ -17,6 +17,7 @@ public class PlayerAgent {
 	private PlayerIdentifier owner;
 	private int agentId;
 	private Position position;
+	private int focusTokens;
 
 	public static final Comparator<PlayerAgent> ACTIVATION_ORDER_COMPARATOR = (p1, p2) ->
 			Integer.compare(p1.getPilot().getPilotSkill(), p2.getPilot().getPilotSkill());

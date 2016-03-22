@@ -15,6 +15,6 @@ import java.util.List;
 @AllArgsConstructor
 public class Player {
 	private PlayerIdentifier identifier;
-	private Connection connection;
+	private int connection;
 	private List<PlayerAgent> playerAgents;
 }

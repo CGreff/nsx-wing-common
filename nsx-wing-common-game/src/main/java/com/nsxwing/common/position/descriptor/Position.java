@@ -1,6 +1,9 @@
 package com.nsxwing.common.position.descriptor;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import java.util.List;
 
@@ -9,16 +12,13 @@ import static java.util.Arrays.asList;
 /**
  * Marks a given ship position using the coordinates of its center.
  */
-@Getter
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class Position {
 	private Coordinate center;
 	//in Radians, measured CW from X axis
 	private double heading;
-
-	public Position(Coordinate center, double heading) {
-		this.center = center;
-		this.heading = heading;
-	}
 
 	/*
 	 * The "Box" Coordinates describe the coordinates for the 4 corners of the ship.
