@@ -15,7 +15,7 @@ import java.util.Comparator;
 public class PlayerAgent {
 	private Pilot pilot;
 	private PlayerIdentifier owner;
-	private int agentId;
+	private String agentId;
 	private Position position;
 	private int focusTokens;
 

@@ -11,6 +11,5 @@ import java.util.Map;
 @Setter
 @NoArgsConstructor
 public class PlanningResponse extends GameResponse {
-
-	private Map<Integer, Maneuver> agentManeuvers;
+	private Map<String, Maneuver> agentManeuvers;
 }

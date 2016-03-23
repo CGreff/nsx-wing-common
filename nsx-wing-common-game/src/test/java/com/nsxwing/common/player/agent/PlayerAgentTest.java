@@ -10,6 +10,7 @@ import org.mockito.MockitoAnnotations;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.UUID;
 
 import static com.nsxwing.common.player.PlayerIdentifier.CHAMP;
 import static com.nsxwing.common.player.PlayerIdentifier.SCRUB;
@@ -29,8 +30,8 @@ public class PlayerAgentTest {
 
 	@Before
 	public void setUp() {
-		underTest = new PlayerAgent(new Pilot(1), CHAMP, 0, null, 0);
-		otherTest = new PlayerAgent(new Pilot(9), SCRUB, 1, null, 0);
+		underTest = new PlayerAgent(new Pilot(1), CHAMP, "bar", null, 0);
+		otherTest = new PlayerAgent(new Pilot(9), SCRUB, "foo", null, 0);
 		agentList = new ArrayList<>();
 	}
 

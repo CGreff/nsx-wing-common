@@ -23,7 +23,7 @@ public class GameState {
 	private Player champ;
 	private Player scrub;
 	private List<PlayerAgent> playerAgents;
-	private Map<Integer, Maneuver> plannedManeuvers;
+	private Map<String, Maneuver> plannedManeuvers;
 	private int turnNumber;
 
 	public boolean isGameComplete() {
@@ -44,10 +44,10 @@ public class GameState {
 		return identifier == PlayerIdentifier.CHAMP ? champ : scrub;
 	}
 
-	public void maneuverAgent(int agentIdentifier, Maneuver maneuver) {
+	public void maneuverAgent(String agentIdentifier, Maneuver maneuver) {
 		//forEach will always only get 1 playerAgent assuming Ids work as intended.
 		playerAgents.stream()
-				.filter((playerAgent -> playerAgent.getAgentId() == agentIdentifier))
+				.filter((playerAgent -> playerAgent.getAgentId().equals(agentIdentifier)))
 				.forEach(playerAgent -> playerAgent.setPosition(maneuver.move(playerAgent.getPosition())));
 	}
 }

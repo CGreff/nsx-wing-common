@@ -28,6 +28,7 @@ import static org.mockito.Mockito.verify;
 public class GameStateTest {
 
 	private static final int INITIAL_TURN_NUMBER = 0;
+	private static final String CHAMP_AGENT_ID = "foo";
 	private GameState underTest;
 
 	@Mock
@@ -68,9 +69,9 @@ public class GameStateTest {
 
 	private void mockAgents() {
 		doReturn(CHAMP).when(champAgent).getOwner();
-		doReturn(0).when(champAgent).getAgentId();
+		doReturn(CHAMP_AGENT_ID).when(champAgent).getAgentId();
 		doReturn(SCRUB).when(scrubAgent).getOwner();
-		doReturn(1).when(scrubAgent).getAgentId();
+		doReturn("bar").when(scrubAgent).getAgentId();
 		doReturn(mock(Position.class)).when(champAgent).getPosition();
 		doReturn(mock(Position.class)).when(scrubAgent).getPosition();
 	}
@@ -111,7 +112,7 @@ public class GameStateTest {
 	public void shouldApplyAManeuverToTheCorrectPlayerAgent() {
 		doReturn(position).when(maneuver).move(any(Position.class));
 
-		underTest.maneuverAgent(0, maneuver);
+		underTest.maneuverAgent(CHAMP_AGENT_ID, maneuver);
 
 		verify(maneuver).move(champAgent.getPosition());
 		verify(champAgent).setPosition(position);

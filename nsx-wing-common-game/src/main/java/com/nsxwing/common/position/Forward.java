@@ -3,6 +3,7 @@ package com.nsxwing.common.position;
 import com.nsxwing.common.position.descriptor.Coordinate;
 import com.nsxwing.common.position.descriptor.Position;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 /**
@@ -10,6 +11,7 @@ import lombok.NoArgsConstructor;
  */
 @Data
 @NoArgsConstructor
+@EqualsAndHashCode(callSuper=false)
 public class Forward extends Maneuver {
 
     private double moveDistance;
