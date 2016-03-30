@@ -15,7 +15,7 @@ import java.util.Random;
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(callSuper = true)
-class AttackDie extends Die {
+public class AttackDie extends Die {
 
 	private RandomProvider diceRollProvider = DiceRollProvider::getRandomDouble;
 

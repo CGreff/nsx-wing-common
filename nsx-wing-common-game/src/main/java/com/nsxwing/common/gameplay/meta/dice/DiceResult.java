@@ -1,11 +1,12 @@
 package com.nsxwing.common.gameplay.meta.dice;
 
 /**
- * Bean used to describe Dice Results.
+ * Enumeration used to describe Dice Results.
+ * Note these are listed in comparable order.
  */
-enum DiceResult {
+public enum DiceResult {
+    CRITICAL_HIT,
     SUCCESS,
-    NOTHING,
     FOCUS,
-    CRITICAL_HIT
+    NOTHING
 }
