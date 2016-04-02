@@ -45,7 +45,6 @@ public class GameState {
 	}
 
 	public void maneuverAgent(String agentIdentifier, Maneuver maneuver) {
-		//forEach will always only get 1 playerAgent assuming Ids work as intended.
 		playerAgents.stream()
 				.filter((playerAgent -> playerAgent.getAgentId().equals(agentIdentifier)))
 				.forEach(playerAgent -> playerAgent.setPosition(maneuver.move(playerAgent.getPosition())));
