@@ -1,10 +1,8 @@
 package com.nsxwing.common.state;
 
 import com.nsxwing.common.player.Player;
-import com.nsxwing.common.player.PlayerIdentifier;
 import com.nsxwing.common.player.agent.PlayerAgent;
 import com.nsxwing.common.position.Maneuver;
-import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -16,15 +14,20 @@ import static com.nsxwing.common.player.PlayerIdentifier.SCRUB;
 
 @Data
 @NoArgsConstructor
-@AllArgsConstructor
-public class GameState {
+public class GameState extends PlayerHandlingState {
 	protected static final int MAX_TURNS = 100;
 
-	private Player champ;
-	private Player scrub;
 	private List<PlayerAgent> playerAgents;
 	private Map<String, Maneuver> plannedManeuvers;
 	private int turnNumber;
+
+	public GameState(Player champ, Player scrub, List<PlayerAgent> playerAgents, Map<String, Maneuver> plannedManeuvers, int turnNumber) {
+		this.champ = champ;
+		this.scrub = scrub;
+		this.playerAgents = playerAgents;
+		this.plannedManeuvers = plannedManeuvers;
+		this.turnNumber = turnNumber;
+	}
 
 	public boolean isGameComplete() {
 		return turnNumber >= MAX_TURNS ||
@@ -38,10 +41,6 @@ public class GameState {
 
 	private boolean isScrubAgent(PlayerAgent playerAgent) {
 		return playerAgent.getOwner() == SCRUB;
-	}
-
-	public Player getPlayerFor(PlayerIdentifier identifier) {
-		return identifier == PlayerIdentifier.CHAMP ? champ : scrub;
 	}
 
 	public void maneuverAgent(String agentIdentifier, Maneuver maneuver) {
