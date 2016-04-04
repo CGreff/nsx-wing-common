@@ -6,11 +6,13 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 public class ModifyDefenseResponse extends GameResponse {
-	private DiceModifer diceModifer;
+	private List<DiceModifer> diceModifer;
 
 	public ModifyDefenseResponse(PlayerIdentifier playerIdentifier) {
 		this.playerIdentifier = playerIdentifier;
