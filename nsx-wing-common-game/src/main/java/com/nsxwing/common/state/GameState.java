@@ -1,5 +1,7 @@
 package com.nsxwing.common.state;
 
+import com.nsxwing.common.gameplay.meta.combat.Target;
+import com.nsxwing.common.gameplay.meta.dice.DiceResult;
 import com.nsxwing.common.player.Player;
 import com.nsxwing.common.player.agent.PlayerAgent;
 import com.nsxwing.common.position.Maneuver;
@@ -8,7 +10,10 @@ import lombok.NoArgsConstructor;
 
 import java.util.List;
 import java.util.Map;
+import java.util.function.Consumer;
+import java.util.function.Predicate;
 
+import static com.nsxwing.common.gameplay.meta.dice.DamageDeterminant.determineDamage;
 import static com.nsxwing.common.player.PlayerIdentifier.CHAMP;
 import static com.nsxwing.common.player.PlayerIdentifier.SCRUB;
 
@@ -45,7 +50,31 @@ public class GameState extends PlayerHandlingState {
 
 	public void maneuverAgent(String agentIdentifier, Maneuver maneuver) {
 		playerAgents.stream()
-				.filter((playerAgent -> playerAgent.getAgentId().equals(agentIdentifier)))
-				.forEach(playerAgent -> playerAgent.setPosition(maneuver.move(playerAgent.getPosition())));
+				.filter((matchesPlayerAgent(agentIdentifier)))
+				.forEach(maneuverAgentConsumer(maneuver));
+	}
+
+	private Consumer<PlayerAgent> maneuverAgentConsumer(Maneuver maneuver) {
+		return playerAgent -> playerAgent.setPosition(maneuver.move(playerAgent.getPosition()));
+	}
+
+	public void applyCombat(CombatState combatState) {
+		determineDamage(combatState.getAttackDice(), combatState.getEvadeDice())
+				.stream()
+				.forEach(diceResult -> { inflictDamage(combatState.getDefender(), diceResult);});
+	}
+
+	private void inflictDamage(Target target, DiceResult result) {
+		playerAgents.stream()
+				.filter(matchesPlayerAgent(target.getTargetAgent().getAgentId()))
+				.forEach(inflictDamageConsumer(result));
+	}
+
+	private Predicate<PlayerAgent> matchesPlayerAgent(String agentId) {
+		return playerAgent -> playerAgent.getAgentId().equals(agentId);
+	}
+
+	private Consumer<PlayerAgent> inflictDamageConsumer(DiceResult result) {
+		return playerAgent -> playerAgent.sufferDamage(result == DiceResult.CRITICAL_HIT);
 	}
 }

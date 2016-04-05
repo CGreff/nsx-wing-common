@@ -24,4 +24,8 @@ public class PlayerAgent {
 
 	public static final Comparator<PlayerAgent> COMBAT_ORDER_COMPARATOR = (p1, p2) ->
 			Integer.compare(p2.getPilot().getPilotSkill(), p1.getPilot().getPilotSkill());
+
+	public void sufferDamage(boolean isCritical) {
+
+	}
 }
