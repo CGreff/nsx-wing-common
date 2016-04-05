@@ -7,8 +7,11 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
+import static java.util.Collections.singletonList;
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
 import static org.mockito.Mockito.verifyZeroInteractions;
@@ -18,7 +21,7 @@ public class NoOpModifierTest {
 	private NoOpModifier underTest;
 
 	@Mock
-	private List<Die> diceResults;
+	private Die die;
 
 	@Before
 	public void setUp() {
@@ -27,9 +30,11 @@ public class NoOpModifierTest {
 
 	@Test
 	public void shouldReturnItsInputAndDoNothing() {
-		List<Die> result = underTest.modify(diceResults);
+		List<Die> diceResults = singletonList(die);
+
+		List<? extends Die> result = underTest.modify(diceResults);
 
 		assertThat(result, is(diceResults));
-		verifyZeroInteractions(diceResults);
+		verifyZeroInteractions(die);
 	}
 }
