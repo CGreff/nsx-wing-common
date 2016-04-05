@@ -12,7 +12,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 public class ModifyAttackResponse extends GameResponse {
-	private List<DiceModifer> diceModifers;
+	private List<DiceModifer> diceModifiers;
 
 	public ModifyAttackResponse(PlayerIdentifier playerIdentifier) {
 		this.playerIdentifier = playerIdentifier;
