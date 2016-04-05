@@ -9,4 +9,6 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class Pilot {
 	private int pilotSkill;
+	private int attack;
+	private int evade;
 }
