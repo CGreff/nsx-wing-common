@@ -1,9 +1,12 @@
 package com.nsxwing.common.gameplay.meta.modifiers;
 
 import com.nsxwing.common.gameplay.meta.dice.DiceResult;
+import com.nsxwing.common.gameplay.meta.dice.Die;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
 
 import java.util.List;
 
@@ -15,33 +18,42 @@ import static java.util.Arrays.asList;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.hasItems;
 import static org.junit.Assert.assertThat;
+import static org.mockito.Mockito.doReturn;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.verifyZeroInteractions;
 
 public class DiceFocuserTest {
 
+	@InjectMocks
 	private DiceFocuser underTest;
 
-	private List<DiceResult> initialDice;
+	@Mock
+	private Die success;
+
+	@Mock
+	private Die focus;
+
+	@Mock
+	private Die nothing;
 
 	@Before
 	public void setUp() {
-		underTest = new DiceFocuser();
+		MockitoAnnotations.initMocks(this);
+		
+		doReturn(DiceResult.SUCCESS).when(success).getResult();
+		doReturn(DiceResult.FOCUS).when(focus).getResult();
+		doReturn(DiceResult.NOTHING).when(nothing).getResult();
 	}
 
 	@Test
-	public void shouldChangeAllFocusResultsToSuccessResults() {
-		initialDice = asList(SUCCESS, FOCUS, NOTHING, FOCUS);
+	public void shouldAttemptToFocusAllDice() {
+		List<Die> initialDice = asList(success, focus, nothing, focus);
 
-		List<DiceResult> results = underTest.modify(initialDice);
+		underTest.modify(initialDice);
 
-		assertThat(results, hasItems(SUCCESS, SUCCESS, NOTHING, SUCCESS));
-	}
-
-	@Test
-	public void shouldLeaveNonFocusedResultsUnchanged() {
-		initialDice = asList(NOTHING, CRITICAL_HIT);
-
-		List<DiceResult> results = underTest.modify(initialDice);
-
-		assertThat(results, equalTo(initialDice));
+		verify(focus, times(2)).focus();
+		verify(success).focus();
+		verify(nothing).focus();
 	}
 }

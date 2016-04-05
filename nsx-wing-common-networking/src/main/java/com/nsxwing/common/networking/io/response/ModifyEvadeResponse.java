@@ -11,10 +11,10 @@ import java.util.List;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class ModifyDefenseResponse extends GameResponse {
+public class ModifyEvadeResponse extends GameResponse {
 	private List<DiceModifer> diceModifer;
 
-	public ModifyDefenseResponse(PlayerIdentifier playerIdentifier) {
+	public ModifyEvadeResponse(PlayerIdentifier playerIdentifier) {
 		this.playerIdentifier = playerIdentifier;
 	}
 }

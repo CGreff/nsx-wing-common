@@ -62,4 +62,13 @@ public class DieTest {
 		assertThat(underTest.getResult(), is(NOTHING));
 		verify(roller, times(2)).accept(any());
 	}
+
+	@Test
+	public void shouldTurnAFocusIntoASuccess() {
+		underTest.result = DiceResult.FOCUS;
+
+		underTest.focus();
+
+		assertThat(underTest.getResult(), is(DiceResult.SUCCESS));
+	}
 }

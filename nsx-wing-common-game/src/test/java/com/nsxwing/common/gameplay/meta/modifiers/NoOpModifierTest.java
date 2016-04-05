@@ -1,6 +1,6 @@
 package com.nsxwing.common.gameplay.meta.modifiers;
 
-import com.nsxwing.common.gameplay.meta.dice.DiceResult;
+import com.nsxwing.common.gameplay.meta.dice.Die;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.InjectMocks;
@@ -18,7 +18,7 @@ public class NoOpModifierTest {
 	private NoOpModifier underTest;
 
 	@Mock
-	private List<DiceResult> diceResults;
+	private List<Die> diceResults;
 
 	@Before
 	public void setUp() {
@@ -27,7 +27,7 @@ public class NoOpModifierTest {
 
 	@Test
 	public void shouldReturnItsInputAndDoNothing() {
-		List<DiceResult> result = underTest.modify(diceResults);
+		List<Die> result = underTest.modify(diceResults);
 
 		assertThat(result, is(diceResults));
 		verifyZeroInteractions(diceResults);

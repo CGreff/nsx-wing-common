@@ -2,6 +2,8 @@ package com.nsxwing.common.gameplay.meta.dice;
 
 import lombok.Getter;
 
+import static com.nsxwing.common.gameplay.meta.dice.DiceResult.NOTHING;
+
 /**
  * Interface that describes rolling of dice; results left to implementations.
  */
@@ -10,7 +12,7 @@ public abstract class Die {
     boolean hasBeenRerolled = false;
 
 	@Getter
-	DiceResult result = DiceResult.NOTHING;
+	DiceResult result = NOTHING;
 
     public void roll() {
         if (hasNotBeenRolled()) {
@@ -31,4 +33,8 @@ public abstract class Die {
     }
 
     protected abstract void rollIt();
+
+	public void focus() {
+		result = result == DiceResult.FOCUS ? DiceResult.SUCCESS : result;
+	}
 }
