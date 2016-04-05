@@ -28,7 +28,15 @@ public class CombatState extends PlayerHandlingState {
 		this.evadeDice = evadeDice;
 	}
 
-	public int determineAttackDice() {
+	public void rollAttack() {
+		attackDice = AttackDie.getDice(determineAttackDice());
+	}
+
+	public void rollEvade() {
+		evadeDice = EvadeDie.getDice(determineEvadeDice());
+	}
+
+	protected int determineAttackDice() {
 		return attacker.getPilot().getAttack() + attackRangeModifier();
 	}
 
@@ -36,7 +44,7 @@ public class CombatState extends PlayerHandlingState {
 		return defender.getRange() == 1 ? 1 : 0;
 	}
 
-	public int determineEvadeDice() {
+	protected int determineEvadeDice() {
 		return defender.getTargetAgent().getPilot().getEvade() + evadeRangeModifier();
 	}
 

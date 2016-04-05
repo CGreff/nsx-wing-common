@@ -9,6 +9,9 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
+import java.util.List;
+
+import static org.hamcrest.CoreMatchers.instanceOf;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
 import static org.mockito.Mockito.doReturn;
@@ -72,5 +75,21 @@ public class CombatStateTest {
 		int result = underTest.determineEvadeDice();
 
 		assertThat(result, is(4));
+	}
+
+	@Test
+	public void shouldRollAttackDice() {
+		underTest.rollAttack();
+
+		assertThat(underTest.getAttackDice(), instanceOf(List.class));
+		assertThat(underTest.getAttackDice().size(), is(3));
+	}
+
+	@Test
+	public void shouldRollEvadeDice() {
+		underTest.rollEvade();
+
+		assertThat(underTest.getEvadeDice(), instanceOf(List.class));
+		assertThat(underTest.getEvadeDice().size(), is(3));
 	}
 }

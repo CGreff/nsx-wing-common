@@ -30,7 +30,7 @@ public class EvadeDie extends Die {
         }
     }
 
-    static List<EvadeDie> getDice(int number) {
+    public static List<EvadeDie> getDice(int number) {
         List<EvadeDie> dice = new ArrayList<>();
         for (int i = 0; i < number; i++) {
             dice.add(new EvadeDie());
