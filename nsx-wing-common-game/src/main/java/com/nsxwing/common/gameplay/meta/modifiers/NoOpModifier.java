@@ -1,13 +1,12 @@
 package com.nsxwing.common.gameplay.meta.modifiers;
 
-import com.nsxwing.common.gameplay.meta.dice.DiceResult;
 import com.nsxwing.common.gameplay.meta.dice.Die;
 
 import java.util.List;
 
 public class NoOpModifier implements DiceModifer {
 	@Override
-	public List<Die> modify(List<Die> diceResults) {
+	public List<? extends Die> modify(List<? extends Die> diceResults) {
 		return diceResults;
 	}
 }

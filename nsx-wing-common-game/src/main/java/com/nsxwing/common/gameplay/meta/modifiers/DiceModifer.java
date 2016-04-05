@@ -5,5 +5,5 @@ import com.nsxwing.common.gameplay.meta.dice.Die;
 import java.util.List;
 
 public interface DiceModifer {
-	List<Die> modify(List<Die> diceResults);
+	List<? extends Die> modify(List<? extends Die> diceResults);
 }
