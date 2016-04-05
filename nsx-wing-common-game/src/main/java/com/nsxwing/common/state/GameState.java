@@ -6,6 +6,7 @@ import com.nsxwing.common.player.Player;
 import com.nsxwing.common.player.agent.PlayerAgent;
 import com.nsxwing.common.position.Maneuver;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 import java.util.List;
@@ -16,9 +17,11 @@ import java.util.function.Predicate;
 import static com.nsxwing.common.gameplay.meta.dice.DamageDeterminant.determineDamage;
 import static com.nsxwing.common.player.PlayerIdentifier.CHAMP;
 import static com.nsxwing.common.player.PlayerIdentifier.SCRUB;
+import static java.util.stream.Collectors.toList;
 
 @Data
 @NoArgsConstructor
+@EqualsAndHashCode(callSuper=false)
 public class GameState extends PlayerHandlingState {
 	protected static final int MAX_TURNS = 100;
 
@@ -52,6 +55,13 @@ public class GameState extends PlayerHandlingState {
 		playerAgents.stream()
 				.filter((matchesPlayerAgent(agentIdentifier)))
 				.forEach(maneuverAgentConsumer(maneuver));
+	}
+
+	public List<Target> findTargetsFor(PlayerAgent agent) {
+		return playerAgents.stream()
+				.filter(playerAgent -> agent.getOwner() != playerAgent.getOwner())
+				.map(playerAgent -> new Target(playerAgent, 2, false))
+				.collect(toList());
 	}
 
 	private Consumer<PlayerAgent> maneuverAgentConsumer(Maneuver maneuver) {

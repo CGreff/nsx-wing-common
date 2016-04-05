@@ -6,12 +6,14 @@ import com.nsxwing.common.gameplay.meta.dice.EvadeDie;
 import com.nsxwing.common.player.Player;
 import com.nsxwing.common.player.agent.PlayerAgent;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 import java.util.List;
 
 @Data
 @NoArgsConstructor
+@EqualsAndHashCode(callSuper=false)
 public class CombatState extends PlayerHandlingState {
 	private PlayerAgent attacker;
 	private Target defender;
