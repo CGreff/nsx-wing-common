@@ -8,9 +8,11 @@ import com.nsxwing.common.gameplay.action.Focus;
 import com.nsxwing.common.gameplay.meta.combat.Target;
 import com.nsxwing.common.gameplay.meta.dice.AttackDie;
 import com.nsxwing.common.gameplay.meta.dice.DiceResult;
+import com.nsxwing.common.gameplay.meta.dice.DiceRollProvider;
 import com.nsxwing.common.gameplay.meta.dice.EvadeDie;
 import com.nsxwing.common.gameplay.meta.modifiers.DiceFocuser;
 import com.nsxwing.common.gameplay.meta.modifiers.DiceModifer;
+import com.nsxwing.common.gameplay.meta.modifiers.NoOpModifier;
 import com.nsxwing.common.networking.io.event.ActionEvent;
 import com.nsxwing.common.networking.io.event.AttackEvent;
 import com.nsxwing.common.networking.io.event.ConnectionEvent;
@@ -72,9 +74,11 @@ public class KryoNetwork {
 
 		kryo.register(DiceModifer.class);
 		kryo.register(DiceFocuser.class);
+		kryo.register(NoOpModifier.class);
 		kryo.register(DiceResult.class);
 		kryo.register(AttackDie.class);
 		kryo.register(EvadeDie.class);
+		kryo.register(DiceRollProvider.class);
 
 		kryo.register(ActionEvent.class);
 		kryo.register(ActionResponse.class);

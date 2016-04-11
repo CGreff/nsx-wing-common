@@ -1,29 +1,20 @@
 package com.nsxwing.common.gameplay.meta.dice;
 
-import com.nsxwing.common.gameplay.meta.dice.DiceRollProvider.RandomProvider;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
-@Data
 @NoArgsConstructor
-@AllArgsConstructor
-@EqualsAndHashCode(callSuper = true)
 public class EvadeDie extends Die {
-
-	private RandomProvider diceRollProvider = DiceRollProvider::getRandomDouble;
+	private DiceRollProvider diceRollProvider = new DiceRollProvider();
 
     protected void rollIt() {
-        double val = diceRollProvider.getRandomDouble();
+        double value = diceRollProvider.getRandomDouble();
 
-        if (val < 0.3) {
+        if (value < 0.3) {
             result = DiceResult.SUCCESS;
-        } else if (val < 0.5) {
+        } else if (value < 0.5) {
             result = DiceResult.FOCUS;
         } else {
             result = DiceResult.NOTHING;

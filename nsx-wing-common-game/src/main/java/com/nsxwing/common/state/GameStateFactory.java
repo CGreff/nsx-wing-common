@@ -16,12 +16,17 @@ public class GameStateFactory {
 	private static final int INITIAL_TURN_NUMBER = 0;
 
 	public GameState buildInitialGameState(Player champ, Player scrub) {
+		return buildInitialGameState(champ, scrub, 100);
+	}
+
+	public GameState buildInitialGameState(Player champ, Player scrub, int maxTurns) {
 		List<PlayerAgent> agents = new ArrayList<>();
 		addPlayerIdentifier(champ, CHAMP);
 		addPlayerIdentifier(scrub, SCRUB);
 		agents.addAll(champ.getPlayerAgents());
 		agents.addAll(scrub.getPlayerAgents());
 
+		GameState.MAX_TURNS = maxTurns;
 		return new GameState(champ, scrub, agents, new HashMap<>(), INITIAL_TURN_NUMBER);
 	}
 

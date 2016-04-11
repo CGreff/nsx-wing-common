@@ -1,6 +1,5 @@
 package com.nsxwing.common.gameplay.meta.dice;
 
-import com.nsxwing.common.gameplay.meta.dice.DiceRollProvider.RandomProvider;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.InjectMocks;
@@ -9,7 +8,6 @@ import org.mockito.MockitoAnnotations;
 
 import java.util.List;
 
-import static com.nsxwing.common.gameplay.meta.dice.DiceResult.CRITICAL_HIT;
 import static com.nsxwing.common.gameplay.meta.dice.DiceResult.FOCUS;
 import static com.nsxwing.common.gameplay.meta.dice.DiceResult.NOTHING;
 import static com.nsxwing.common.gameplay.meta.dice.DiceResult.SUCCESS;
@@ -25,7 +23,7 @@ public class EvadeDieTest {
 	private EvadeDie underTest;
 
 	@Mock
-	private RandomProvider diceRollProvider;
+	private DiceRollProvider diceRollProvider;
 
 	@Before
 	public void setUp() {

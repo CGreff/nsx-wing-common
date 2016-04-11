@@ -1,6 +1,5 @@
 package com.nsxwing.common.gameplay.meta.dice;
 
-import com.nsxwing.common.gameplay.meta.dice.DiceRollProvider.RandomProvider;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.InjectMocks;
@@ -25,7 +24,7 @@ public class AttackDieTest {
 	private AttackDie underTest;
 
 	@Mock
-	private RandomProvider diceRollProvider;
+	private DiceRollProvider diceRollProvider;
 
 	@Before
 	public void setUp() {

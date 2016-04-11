@@ -23,7 +23,7 @@ import static java.util.stream.Collectors.toList;
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper=false)
 public class GameState extends PlayerHandlingState {
-	protected static final int MAX_TURNS = 100;
+	protected static int MAX_TURNS = 100;
 
 	private List<PlayerAgent> playerAgents;
 	private Map<String, Maneuver> plannedManeuvers;

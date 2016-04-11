@@ -54,11 +54,24 @@ public class GameStateFactoryTest {
 
 	@Test
 	public void shouldBuildInitialGameStateWithPlayers() {
-		GameState expected = underTest.buildInitialGameState(champ, scrub);
+		GameState result = underTest.buildInitialGameState(champ, scrub);
 
-		assertThat(expected.getPlayerAgents(), hasItem(scrubAgent));
-		assertThat(expected.getPlayerAgents(), hasItem(champAgent));
-		assertThat(expected.getTurnNumber(), is(0));
+		validateGameState(result);
+	}
+
+	@Test
+	public void shouldBuildInitialGameStateWithMaxTurns() {
+		int maxTurns = 50;
+		GameState result = underTest.buildInitialGameState(champ, scrub, maxTurns);
+
+		assertThat(GameState.MAX_TURNS, is(maxTurns));
+		validateGameState(result);
+	}
+
+	private void validateGameState(GameState result) {
+		assertThat(result.getPlayerAgents(), hasItem(scrubAgent));
+		assertThat(result.getPlayerAgents(), hasItem(champAgent));
+		assertThat(result.getTurnNumber(), is(0));
 		verify(champAgent).setOwner(eq(CHAMP));
 		verify(scrubAgent).setOwner(eq(SCRUB));
 	}
