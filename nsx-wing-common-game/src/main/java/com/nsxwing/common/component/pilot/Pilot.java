@@ -11,4 +11,5 @@ public class Pilot {
 	private int pilotSkill;
 	private int attack;
 	private int evade;
+	private boolean hugeShip;
 }

@@ -13,4 +13,8 @@ import lombok.NoArgsConstructor;
 public class Coordinate {
     public double x;
     public double y;
+
+    public double getDistanceTo(Coordinate coordinate) {
+		return Math.sqrt(Math.pow(y - coordinate.y, 2) + Math.pow(x - coordinate.x, 2));
+	}
 }

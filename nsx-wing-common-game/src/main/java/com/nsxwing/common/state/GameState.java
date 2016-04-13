@@ -1,6 +1,9 @@
 package com.nsxwing.common.state;
 
+import com.nsxwing.common.gameplay.meta.combat.FiringArc;
+import com.nsxwing.common.gameplay.meta.combat.FiringLine;
 import com.nsxwing.common.gameplay.meta.combat.Target;
+import com.nsxwing.common.gameplay.meta.combat.RangeFinder;
 import com.nsxwing.common.gameplay.meta.dice.DiceResult;
 import com.nsxwing.common.player.Player;
 import com.nsxwing.common.player.agent.PlayerAgent;
@@ -58,9 +61,14 @@ public class GameState extends PlayerHandlingState {
 	}
 
 	public List<Target> findTargetsFor(PlayerAgent agent) {
+		//TODO: Testdrive when it's not past midnight
+		RangeFinder rangeFinder = new RangeFinder(agent.getPosition());
+		FiringArc firingArc = agent.determineFiringArc();
+
 		return playerAgents.stream()
 				.filter(playerAgent -> agent.getOwner() != playerAgent.getOwner())
-				.map(playerAgent -> new Target(playerAgent, 2, false))
+				.filter(playerAgent -> firingArc.isTargetable(playerAgent.getPosition().getCenter()) && rangeFinder.getRangeToTarget(playerAgent) <= 3)
+				.map(playerAgent -> new Target(playerAgent, rangeFinder.getRangeToTarget(playerAgent), false))
 				.collect(toList());
 	}
 
