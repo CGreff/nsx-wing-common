@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class Focus implements Action {
+public class Evade implements Action {
 
 	private PlayerAgent actionTaker;
 
@@ -17,7 +17,7 @@ public class Focus implements Action {
 	public GameState execute(GameState gameState) {
 		gameState.getPlayerAgents().stream()
 				.filter(playerAgent -> matchPlayerAgent(actionTaker, playerAgent))
-				.forEach(playerAgent -> playerAgent.setFocusTokens(playerAgent.getFocusTokens() + 1));
+				.forEach(playerAgent -> playerAgent.setEvadeTokens(playerAgent.getEvadeTokens() + 1));
 
 		return gameState;
 	}

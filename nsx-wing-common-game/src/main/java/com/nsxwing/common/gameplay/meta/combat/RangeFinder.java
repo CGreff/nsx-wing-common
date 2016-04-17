@@ -7,10 +7,13 @@ import lombok.AllArgsConstructor;
 
 import java.util.List;
 
-@AllArgsConstructor
 public class RangeFinder {
 
 	private Position agentPosition;
+
+	public RangeFinder(PlayerAgent agent) {
+		agentPosition = agent.getPosition();
+	}
 
 	public int getRangeToTarget(PlayerAgent target) {
 		Coordinate closestPoint = findClosestPoint(target.getPosition().getBoxCoordinates(target.getPilot().isHugeShip()),

@@ -1,5 +1,6 @@
 package com.nsxwing.common.state;
 
+import com.nsxwing.common.gameplay.meta.combat.TargetFinder;
 import com.nsxwing.common.player.Player;
 import com.nsxwing.common.player.PlayerIdentifier;
 import com.nsxwing.common.player.agent.PlayerAgent;
@@ -27,7 +28,7 @@ public class GameStateFactory {
 		agents.addAll(scrub.getPlayerAgents());
 
 		GameState.MAX_TURNS = maxTurns;
-		return new GameState(champ, scrub, agents, new HashMap<>(), INITIAL_TURN_NUMBER);
+		return new GameState(champ, scrub, agents, new TargetFinder(), new HashMap<>(), INITIAL_TURN_NUMBER);
 	}
 
 	private void addPlayerIdentifier(Player player, PlayerIdentifier playerIdentifier) {
@@ -39,6 +40,7 @@ public class GameStateFactory {
 				gameState.getChamp(),
 				gameState.getScrub(),
 				gameState.getPlayerAgents(),
+				gameState.getTargetFinder(),
 				gameState.getPlannedManeuvers(),
 				gameState.getTurnNumber() + 1);
 	}

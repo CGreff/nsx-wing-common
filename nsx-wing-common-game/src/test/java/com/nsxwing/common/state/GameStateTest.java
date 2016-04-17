@@ -1,6 +1,8 @@
 package com.nsxwing.common.state;
 
+import com.nsxwing.common.gameplay.meta.combat.RangeFinder;
 import com.nsxwing.common.gameplay.meta.combat.Target;
+import com.nsxwing.common.gameplay.meta.combat.TargetFinder;
 import com.nsxwing.common.gameplay.meta.dice.AttackDie;
 import com.nsxwing.common.gameplay.meta.dice.EvadeDie;
 import com.nsxwing.common.player.Player;
@@ -13,6 +15,7 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
 import java.util.List;
+import java.util.function.Function;
 
 import static com.nsxwing.common.gameplay.meta.dice.DiceResult.CRITICAL_HIT;
 import static com.nsxwing.common.gameplay.meta.dice.DiceResult.NOTHING;
@@ -25,10 +28,10 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.Matchers.any;
+import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.verifyNoMoreInteractions;
 
 public class GameStateTest {
 
@@ -66,6 +69,18 @@ public class GameStateTest {
 	@Mock
 	private EvadeDie nothing;
 
+	@Mock
+	private TargetFinder targetFinder;
+
+	@Mock
+	private Function<PlayerAgent, RangeFinder> rangeFinderProvider;
+
+	@Mock
+	private RangeFinder rangeFinder;
+
+	@Mock
+	private List<Target> targets;
+
 	private List<PlayerAgent> playerAgents;
 
 
@@ -78,6 +93,7 @@ public class GameStateTest {
 
 		mockAgents();
 		mockDice();
+		doReturn(rangeFinder).when(rangeFinderProvider).apply(any(PlayerAgent.class));
 	}
 
 	private void mockDice() {
@@ -87,7 +103,9 @@ public class GameStateTest {
 	}
 
 	private GameState buildGameState(List<PlayerAgent> playerAgents, int turnNumber) {
-		return new GameState(champ, scrub, playerAgents, null, turnNumber);
+		GameState gameState = new GameState(champ, scrub, playerAgents, targetFinder, null, turnNumber);
+		gameState.setRangeFinderProvider(rangeFinderProvider);
+		return  gameState;
 	}
 
 	private void mockAgents() {
@@ -151,6 +169,17 @@ public class GameStateTest {
 
 		verify(scrubAgent).sufferDamage(false);
 		verify(scrubAgent).sufferDamage(true);
+	}
+
+	@Test
+	public void shouldCallTargetFinderToRetrieveTargets() {
+		doReturn(targets).when(targetFinder).findTargets(eq(champAgent), eq(rangeFinder), eq(playerAgents));
+
+		List<Target> result = underTest.findTargetsFor(champAgent);
+
+		verify(targetFinder).findTargets(champAgent, rangeFinder, playerAgents);
+		verify(rangeFinderProvider).apply(champAgent);
+		assertThat(result, is(targets));
 	}
 
 	private CombatState buildCombatState() {

@@ -1,9 +1,8 @@
 package com.nsxwing.common.state;
 
-import com.nsxwing.common.gameplay.meta.combat.FiringArc;
-import com.nsxwing.common.gameplay.meta.combat.FiringLine;
-import com.nsxwing.common.gameplay.meta.combat.Target;
 import com.nsxwing.common.gameplay.meta.combat.RangeFinder;
+import com.nsxwing.common.gameplay.meta.combat.Target;
+import com.nsxwing.common.gameplay.meta.combat.TargetFinder;
 import com.nsxwing.common.gameplay.meta.dice.DiceResult;
 import com.nsxwing.common.player.Player;
 import com.nsxwing.common.player.agent.PlayerAgent;
@@ -15,12 +14,12 @@ import lombok.NoArgsConstructor;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Consumer;
+import java.util.function.Function;
 import java.util.function.Predicate;
 
 import static com.nsxwing.common.gameplay.meta.dice.DamageDeterminant.determineDamage;
 import static com.nsxwing.common.player.PlayerIdentifier.CHAMP;
 import static com.nsxwing.common.player.PlayerIdentifier.SCRUB;
-import static java.util.stream.Collectors.toList;
 
 @Data
 @NoArgsConstructor
@@ -31,11 +30,14 @@ public class GameState extends PlayerHandlingState {
 	private List<PlayerAgent> playerAgents;
 	private Map<String, Maneuver> plannedManeuvers;
 	private int turnNumber;
+	private TargetFinder targetFinder;
+	private Function<PlayerAgent, RangeFinder> rangeFinderProvider = this::provideRangeFinder;
 
-	public GameState(Player champ, Player scrub, List<PlayerAgent> playerAgents, Map<String, Maneuver> plannedManeuvers, int turnNumber) {
+	public GameState(Player champ, Player scrub, List<PlayerAgent> playerAgents, TargetFinder targetFinder, Map<String, Maneuver> plannedManeuvers, int turnNumber) {
 		this.champ = champ;
 		this.scrub = scrub;
 		this.playerAgents = playerAgents;
+		this.targetFinder = targetFinder;
 		this.plannedManeuvers = plannedManeuvers;
 		this.turnNumber = turnNumber;
 	}
@@ -61,15 +63,7 @@ public class GameState extends PlayerHandlingState {
 	}
 
 	public List<Target> findTargetsFor(PlayerAgent agent) {
-		//TODO: Testdrive when it's not past midnight
-		RangeFinder rangeFinder = new RangeFinder(agent.getPosition());
-		FiringArc firingArc = agent.determineFiringArc();
-
-		return playerAgents.stream()
-				.filter(playerAgent -> agent.getOwner() != playerAgent.getOwner())
-				.filter(playerAgent -> firingArc.isTargetable(playerAgent.getPosition().getCenter()) && rangeFinder.getRangeToTarget(playerAgent) <= 3)
-				.map(playerAgent -> new Target(playerAgent, rangeFinder.getRangeToTarget(playerAgent), false))
-				.collect(toList());
+		return targetFinder.findTargets(agent, rangeFinderProvider.apply(agent), playerAgents);
 	}
 
 	private Consumer<PlayerAgent> maneuverAgentConsumer(Maneuver maneuver) {
@@ -94,5 +88,9 @@ public class GameState extends PlayerHandlingState {
 
 	private Consumer<PlayerAgent> inflictDamageConsumer(DiceResult result) {
 		return playerAgent -> playerAgent.sufferDamage(result == DiceResult.CRITICAL_HIT);
+	}
+
+	private RangeFinder provideRangeFinder(PlayerAgent agent) {
+		return new RangeFinder(agent);
 	}
 }

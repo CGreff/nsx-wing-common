@@ -9,9 +9,12 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
 import static java.util.Arrays.asList;
+import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
 import static org.mockito.Answers.RETURNS_DEEP_STUBS;
+import static org.mockito.Mockito.atLeastOnce;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 public class RangeFinderTest {
@@ -20,6 +23,9 @@ public class RangeFinderTest {
 	private static final double RANGE_TWO_DISTANCE = 150.0;
 	private static final double RANGE_THREE_DISTANCE = 231.0;
 	private RangeFinder underTest;
+
+	@Mock
+	private PlayerAgent playerAgent;
 
 	@Mock
 	private Position agentPosition;
@@ -36,8 +42,9 @@ public class RangeFinderTest {
 	@Before
 	public void setUp() {
 		MockitoAnnotations.initMocks(this);
+		when(playerAgent.getPosition()).thenReturn(agentPosition);
 
-		underTest = new RangeFinder(agentPosition);
+		underTest = new RangeFinder(playerAgent);
 
 		mockTarget();
 		mockCoordinates();
@@ -51,6 +58,15 @@ public class RangeFinderTest {
 	private void mockTarget() {
 		when(target.getPilot().isHugeShip()).thenReturn(false);
 		when(target.getPosition().getBoxCoordinates(false)).thenReturn(asList(targetCoordinate));
+	}
+
+	@Test
+	public void shouldReturnARangeFinderGivenTheAgent() {
+		RangeFinder result = new RangeFinder(playerAgent);
+
+		assertThat(result, is(notNullValue()));
+		//atLeastOnce() because it's already being constructed in the before block.
+		verify(playerAgent, atLeastOnce()).getPosition();
 	}
 
 	@Test
