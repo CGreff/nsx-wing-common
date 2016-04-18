@@ -4,8 +4,8 @@ dependencies {
 	compile project(':nsx-wing-common-game')
 	compile "com.esotericsoftware:kryonet:${project.kryonetVersion}"
 	compile "de.javakaffee:kryo-serializers:${project.kryoSerializersVersion}"
-//	compile "com.fasterxml.jackson.core:jackson-databind:2.7.3"
-//	compile "com.fasterxml.jackson.core:jackson-core:2.7.3"
+	compile "com.fasterxml.jackson.core:jackson-databind:2.7.3"
+	compile "com.fasterxml.jackson.core:jackson-core:2.7.3"
 
 	runtime(
 			[group: 'ch.qos.logback', name: 'logback-classic', version: project.logbackVersion],

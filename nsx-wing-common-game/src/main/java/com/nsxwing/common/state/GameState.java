@@ -1,6 +1,7 @@
 package com.nsxwing.common.state;
 
 import com.nsxwing.common.gameplay.meta.combat.RangeFinder;
+import com.nsxwing.common.gameplay.meta.combat.RangeFinderFactory;
 import com.nsxwing.common.gameplay.meta.combat.Target;
 import com.nsxwing.common.gameplay.meta.combat.TargetFinder;
 import com.nsxwing.common.gameplay.meta.dice.DiceResult;
@@ -31,13 +32,14 @@ public class GameState extends PlayerHandlingState {
 	private Map<String, Maneuver> plannedManeuvers;
 	private int turnNumber;
 	private TargetFinder targetFinder;
-	private Function<PlayerAgent, RangeFinder> rangeFinderProvider = this::provideRangeFinder;
+	private RangeFinderFactory rangeFinderFactory;
 
-	public GameState(Player champ, Player scrub, List<PlayerAgent> playerAgents, TargetFinder targetFinder, Map<String, Maneuver> plannedManeuvers, int turnNumber) {
+	public GameState(Player champ, Player scrub, List<PlayerAgent> playerAgents, Map<String, Maneuver> plannedManeuvers, int turnNumber) {
 		this.champ = champ;
 		this.scrub = scrub;
 		this.playerAgents = playerAgents;
-		this.targetFinder = targetFinder;
+		this.targetFinder = new TargetFinder();
+		this.rangeFinderFactory = new RangeFinderFactory();
 		this.plannedManeuvers = plannedManeuvers;
 		this.turnNumber = turnNumber;
 	}
@@ -63,7 +65,7 @@ public class GameState extends PlayerHandlingState {
 	}
 
 	public List<Target> findTargetsFor(PlayerAgent agent) {
-		return targetFinder.findTargets(agent, rangeFinderProvider.apply(agent), playerAgents);
+		return targetFinder.findTargets(agent, rangeFinderFactory.build(agent), playerAgents);
 	}
 
 	private Consumer<PlayerAgent> maneuverAgentConsumer(Maneuver maneuver) {
@@ -88,9 +90,5 @@ public class GameState extends PlayerHandlingState {
 
 	private Consumer<PlayerAgent> inflictDamageConsumer(DiceResult result) {
 		return playerAgent -> playerAgent.sufferDamage(result == DiceResult.CRITICAL_HIT);
-	}
-
-	private RangeFinder provideRangeFinder(PlayerAgent agent) {
-		return new RangeFinder(agent);
 	}
 }

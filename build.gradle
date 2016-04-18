@@ -26,6 +26,7 @@ subprojects {
 	dependencies {
 		compile "org.projectlombok:lombok:${project.lombokVersion}"
 		compile "org.slf4j:slf4j-api:${project.slf4jVersion}"
+		compile 'com.google.inject:guice:4.0'
 
 
 		testCompile "org.slf4j:log4j-over-slf4j:${project.slf4jVersion}"

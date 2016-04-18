@@ -1,6 +1,7 @@
 package com.nsxwing.common.state;
 
 import com.nsxwing.common.gameplay.meta.combat.RangeFinder;
+import com.nsxwing.common.gameplay.meta.combat.RangeFinderFactory;
 import com.nsxwing.common.gameplay.meta.combat.Target;
 import com.nsxwing.common.gameplay.meta.combat.TargetFinder;
 import com.nsxwing.common.gameplay.meta.dice.AttackDie;
@@ -73,7 +74,7 @@ public class GameStateTest {
 	private TargetFinder targetFinder;
 
 	@Mock
-	private Function<PlayerAgent, RangeFinder> rangeFinderProvider;
+	private RangeFinderFactory rangeFinderFactory;
 
 	@Mock
 	private RangeFinder rangeFinder;
@@ -93,7 +94,7 @@ public class GameStateTest {
 
 		mockAgents();
 		mockDice();
-		doReturn(rangeFinder).when(rangeFinderProvider).apply(any(PlayerAgent.class));
+		doReturn(rangeFinder).when(rangeFinderFactory).build(any(PlayerAgent.class));
 	}
 
 	private void mockDice() {
@@ -103,8 +104,9 @@ public class GameStateTest {
 	}
 
 	private GameState buildGameState(List<PlayerAgent> playerAgents, int turnNumber) {
-		GameState gameState = new GameState(champ, scrub, playerAgents, targetFinder, null, turnNumber);
-		gameState.setRangeFinderProvider(rangeFinderProvider);
+		GameState gameState = new GameState(champ, scrub, playerAgents, null, turnNumber);
+		gameState.setRangeFinderFactory(rangeFinderFactory);
+		gameState.setTargetFinder(targetFinder);
 		return  gameState;
 	}
 
@@ -178,7 +180,7 @@ public class GameStateTest {
 		List<Target> result = underTest.findTargetsFor(champAgent);
 
 		verify(targetFinder).findTargets(champAgent, rangeFinder, playerAgents);
-		verify(rangeFinderProvider).apply(champAgent);
+		verify(rangeFinderFactory).build(champAgent);
 		assertThat(result, is(targets));
 	}
 

@@ -1,6 +1,10 @@
 package com.nsxwing.common.networking.config;
 
 import com.esotericsoftware.kryo.Kryo;
+import com.esotericsoftware.kryo.Serializer;
+import com.esotericsoftware.kryo.factories.SerializerFactory;
+import com.esotericsoftware.kryo.io.Input;
+import com.esotericsoftware.kryo.io.Output;
 import com.esotericsoftware.kryonet.EndPoint;
 import com.nsxwing.common.component.pilot.Pilot;
 import com.nsxwing.common.gameplay.action.Action;
@@ -56,30 +60,9 @@ public class KryoNetwork {
 
 	static public void register(EndPoint endPoint) {
 		Kryo kryo = endPoint.getKryo();
-		kryo.register(Arrays.asList("").getClass(), new ArraysAsListSerializer());
-		kryo.register(List.class);
-		kryo.register(ArrayList.class);
-		kryo.register(Map.class);
-		kryo.register(Integer.class);
-		kryo.register(HashMap.class);
+		kryo.setDefaultSerializer(new JacksonSerializerFactory());
 
-		kryo.register(GameState.class);
-		kryo.register(PlayerIdentifier.class);
-		kryo.register(PlayerAgent.class);
-		kryo.register(Player.class);
-		kryo.register(Target.class);
-		kryo.register(Pilot.class);
-		kryo.register(Action.class);
-		kryo.register(Focus.class);
-
-		kryo.register(DiceModifer.class);
-		kryo.register(DiceFocuser.class);
-		kryo.register(NoOpModifier.class);
-		kryo.register(DiceResult.class);
-		kryo.register(AttackDie.class);
-		kryo.register(EvadeDie.class);
-		kryo.register(DiceRollProvider.class);
-
+		//High level classes that are actually sent down the wire need to be "registered" for kryo
 		kryo.register(ActionEvent.class);
 		kryo.register(ActionResponse.class);
 		kryo.register(AttackEvent.class);
@@ -99,14 +82,5 @@ public class KryoNetwork {
 		kryo.register(GameEndEvent.class);
 		kryo.register(ConnectionEvent.class);
 		kryo.register(ConnectionResponse.class);
-
-		kryo.register(Position.class);
-		kryo.register(Coordinate.class);
-		kryo.register(Maneuver.class);
-		kryo.register(ManeuverDifficulty.class);
-		kryo.register(Direction.class);
-		kryo.register(Forward.class);
 	}
-
-
 }

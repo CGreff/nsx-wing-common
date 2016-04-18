@@ -28,7 +28,7 @@ public class GameStateFactory {
 		agents.addAll(scrub.getPlayerAgents());
 
 		GameState.MAX_TURNS = maxTurns;
-		return new GameState(champ, scrub, agents, new TargetFinder(), new HashMap<>(), INITIAL_TURN_NUMBER);
+		return new GameState(champ, scrub, agents, new HashMap<>(), INITIAL_TURN_NUMBER);
 	}
 
 	private void addPlayerIdentifier(Player player, PlayerIdentifier playerIdentifier) {
@@ -40,7 +40,6 @@ public class GameStateFactory {
 				gameState.getChamp(),
 				gameState.getScrub(),
 				gameState.getPlayerAgents(),
-				gameState.getTargetFinder(),
 				gameState.getPlannedManeuvers(),
 				gameState.getTurnNumber() + 1);
 	}
